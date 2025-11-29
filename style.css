@@ -1,67 +1,63 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f2f5;
-}
+// Load Chart.js from CDN
+const script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+document.head.appendChild(script);
 
-header {
-  background-color: #007BFF;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  font-size: 1.5em;
-}
+script.onload = function() {
 
-.dashboard {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
+  // Function to update card stats randomly
+  function updateStat(id) {
+    const element = document.getElementById(id);
+    let newValue;
+    switch(id) {
+      case 'users':
+        newValue = Math.floor(Math.random() * 200) + 50;
+        break;
+      case 'orders':
+        newValue = Math.floor(Math.random() * 100) + 20;
+        break;
+      case 'revenue':
+        newValue = Math.floor(Math.random() * 2000) + 500;
+        break;
+    }
+    element.textContent = newValue;
 
-.card {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  text-align: center;
-  flex: 1 1 200px;
-  min-width: 200px;
-}
+    // Update chart
+    updateChart();
+  }
 
-.card h2 {
-  margin: 0 0 10px 0;
-  font-size: 1.2em;
-  color: #333;
-}
+  // Make updateStat global so buttons can access
+  window.updateStat = updateStat;
 
-.stat {
-  font-size: 2em;
-  font-weight: bold;
-  color: #007BFF;
-  margin-bottom: 10px;
-}
+  // Initialize chart
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Users', 'Orders', 'Revenue'],
+      datasets: [{
+        label: 'Today',
+        data: [
+          parseInt(document.getElementById('users').textContent),
+          parseInt(document.getElementById('orders').textContent),
+          parseInt(document.getElementById('revenue').textContent)
+        ],
+        backgroundColor: ['#007BFF', '#28a745', '#ffc107']
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true } }
+    }
+  });
 
-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007BFF;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.chart-container {
-  background-color: white;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+  // Function to update chart
+  function updateChart() {
+    myChart.data.datasets[0].data = [
+      parseInt(document.getElementById('users').textContent),
+      parseInt(document.getElementById('orders').textContent),
+      parseInt(document.getElementById('revenue').textContent)
+    ];
+    myChart.update();
+  }
+};
