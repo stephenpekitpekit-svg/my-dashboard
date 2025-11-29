@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>ODR DASHBOARD SAMPLE</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <header>PALINPINON-1 GEOTHERMAL POWER PLANT</header>
+
+<div class="dashboard">
+  <div class="card">
+    <h2>Users Online</h2>
+    <div class="stat" id="users">128</div>
+    <button onclick="updateStat('users')">Update</button>
+  </div>
+  <div class="card">
+    <h2>Orders Today</h2>
+    <div class="stat" id="orders">75</div>
+    <button onclick="updateStat('orders')">Update</button>
+  </div>
+  <div class="card">
+    <h2>Revenue ($)</h2>
+    <div class="stat" id="revenue">1024</div>
+    <button onclick="updateStat('revenue')">Update</button>
+  </div>
+</div>
+
+<div class="chart-container">
+  <canvas id="myChart"></canvas>
+</div>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
